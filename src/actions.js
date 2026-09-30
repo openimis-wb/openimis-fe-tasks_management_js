@@ -54,6 +54,7 @@ const TASK_PROJECTION = () => [
 const TASK_HISTORY_FULL_PROJECTION = () => [
   'id',
   'entityId',
+  'entityString',
   'source',
   'status',
   'executorActionEvent',
