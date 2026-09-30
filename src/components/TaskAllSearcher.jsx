@@ -72,9 +72,9 @@ function TaskAllSearcher({
 
   const sorts = () => [
     ['source', true],
-    ['type', true],
-    ['entity', true],
-    ['assignee', true],
+    ['businessEvent', true],
+    null,
+    ['taskGroup__code', true],
     ['date_created', true],
     ['status', true],
   ];
