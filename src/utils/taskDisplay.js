@@ -27,7 +27,7 @@ const parseObject = (raw) => {
   try {
     const parsed = JSON.parse(raw);
     return parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : null;
-  } catch (error) {
+  } catch {
     return null;
   }
 };
