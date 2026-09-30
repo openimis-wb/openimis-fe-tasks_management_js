@@ -5,6 +5,7 @@ import React from 'react';
 import { FormattedMessage } from '@openimis/fe-core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import messages_en from './translations/en.json';
+import messages_fr from './translations/fr.json';
 import reducer from './reducer';
 import TasksMainMenu from './menus/TasksMainMenu';
 import TasksManagementPage from './pages/TasksManagementPage';
@@ -30,7 +31,7 @@ const ROUTE_GROUPS_MANAGEMENT = 'tasks/groups';
 const ROUTE_GROUP_MANAGEMENT = 'tasks/groups/group';
 
 const DEFAULT_CONFIG = {
-  translations: [{ key: 'en', messages: messages_en }],
+  translations: [{ key: 'en', messages: messages_en }, { key: 'fr', messages: messages_fr }],
   reducers: [{ key: 'tasksManagement', reducer }],
   'core.MainMenu': [{ name: 'TasksMainMenu', component: TasksMainMenu }],
   'admin.MainMenu': [...getAdminMainMenuContributions()],

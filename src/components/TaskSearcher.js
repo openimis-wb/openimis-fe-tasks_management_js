@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Searcher,
@@ -15,11 +16,14 @@ import {
 import TaskFilter from './TaskFilter';
 import { fetchTasks } from '../actions';
 import trimBusinessEvent from '../utils/trimBusinessEvent';
+import { formatEntity, taskStatusLabel, translateIfKnown } from '../utils/taskDisplay';
 
 function TaskSearcher({
   rights, contribution, entityId, entityIds, showFilters = true,
 }) {
   const history = useHistory();
+  const intl = useIntl();
+  const translate = (key) => translateIfKnown(intl, key);
   const modulesManager = useModulesManager();
   const dispatch = useDispatch();
   const {
@@ -77,10 +81,10 @@ function TaskSearcher({
   const itemFormatters = () => [
     (task) => task.source,
     (task) => trimBusinessEvent(task.businessEvent),
-    (task) => task.entityString,
+    (task) => formatEntity(task.entityString),
     (task) => task?.taskGroup?.code,
     (task) => formatDateTimeFromISO(task?.dateCreated),
-    (task) => task.status,
+    (task) => taskStatusLabel(task.status, translate),
     (task) => (
       <Tooltip title={formatMessage('viewDetailsButton.tooltip')}>
         <IconButton

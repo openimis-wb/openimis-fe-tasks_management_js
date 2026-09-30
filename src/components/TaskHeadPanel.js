@@ -7,6 +7,7 @@ import {
   TextAreaInput,
   FormattedMessage,
   formatMessage,
+  decodeId,
 } from '@openimis/fe-core';
 import { injectIntl } from 'react-intl';
 import { withTheme, withStyles } from '@material-ui/core/styles';
@@ -14,6 +15,9 @@ import TaskStatusPicker from '../pickers/TaskStatusPicker';
 import TaskGroupPicker from '../pickers/TaskGroupPicker';
 import { TASK_STATUS, TASK_UPDATE } from '../constants';
 import trimBusinessEvent from '../utils/trimBusinessEvent';
+import {
+  formatEntity, formatBusinessStatus, approverNames, translateIfKnown,
+} from '../utils/taskDisplay';
 import TaskHistoryDialog from './dialogs/TaskHistoryDialog';
 
 const styles = (theme) => ({
@@ -55,6 +59,7 @@ class TaskHeadPanel extends FormPanel {
       intl, edited, classes, readOnly, rights,
     } = this.props;
     const task = { ...edited };
+    const names = approverNames(task, decodeId);
     return (
       <>
         {renderHeadPanelTitle(classes, rights, task)}
@@ -83,7 +88,7 @@ class TaskHeadPanel extends FormPanel {
               module="tasksManagement"
               label="task.entity"
               readOnly={readOnly}
-              value={task?.entityString}
+              value={formatEntity(task?.entityString)}
               onChange={(entity) => this.updateAttribute('entity', entity)}
             />
           </Grid>
@@ -102,10 +107,13 @@ class TaskHeadPanel extends FormPanel {
           <Grid item xs={3} className={classes.item}>
             <TextAreaInput
               module="tasksManagement"
-              label="task.businessStatus"
-              readOnly={readOnly}
-              value={task?.businessStatus}
-              onChange={(businessStatus) => this.updateAttribute('businessStatus', businessStatus)}
+              label="task.businessStatus.title"
+              readOnly
+              value={formatBusinessStatus(
+                task?.businessStatus,
+                (userId) => names[userId],
+                (decision) => translateIfKnown(intl, `task.businessStatus.decision.${decision}`),
+              )}
             />
           </Grid>
           <Grid item xs={3} className={classes.item}>

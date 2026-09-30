@@ -1,0 +1,9 @@
+{
+  "tasksManagement.task.status.RECEIVED": "Reçue",
+  "tasksManagement.task.status.ACCEPTED": "Acceptée",
+  "tasksManagement.task.status.COMPLETED": "Terminée",
+  "tasksManagement.task.status.FAILED": "Échec",
+  "tasksManagement.task.businessStatus.title": "Décisions",
+  "tasksManagement.task.businessStatus.decision.APPROVED": "Approuvé",
+  "tasksManagement.task.businessStatus.decision.FAILED": "Échec"
+}
