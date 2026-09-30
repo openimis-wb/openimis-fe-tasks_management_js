@@ -13,7 +13,7 @@ import {
 } from '../constants';
 import { fetchTaskHistory } from '../actions';
 import trimBusinessEvent from '../utils/trimBusinessEvent';
-import { taskStatusLabel, translateIfKnown } from '../utils/taskDisplay';
+import { formatEntity, taskStatusLabel, translateIfKnown } from '../utils/taskDisplay';
 import TaskHistoryFilter from './TaskHistoryFilter';
 
 function TaskHistorySearcher({
@@ -70,7 +70,7 @@ function TaskHistorySearcher({
   const sorts = () => [
     ['source', true],
     ['type', false],
-    ['businessStatus', true],
+    null,
     ['taskGroup', true],
     ['version', true],
     ['dateUpdated', true],
@@ -80,7 +80,7 @@ function TaskHistorySearcher({
   const itemFormatters = () => [
     (taskHistory) => taskHistory.source,
     (taskHistory) => trimBusinessEvent(taskHistory.businessEvent),
-    (taskHistory) => taskHistory.businessStatus,
+    (taskHistory) => formatEntity(taskHistory.entityString),
     (taskHistory) => taskHistory?.taskGroup?.code,
     (taskHistory) => taskHistory.version,
     (taskHistory) => formatDateTimeFromISO(taskHistory?.dateUpdated),
