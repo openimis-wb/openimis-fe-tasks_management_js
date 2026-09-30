@@ -69,9 +69,9 @@ function TaskHistorySearcher({
 
   const sorts = () => [
     ['source', true],
-    ['type', false],
+    ['businessEvent', true],
     null,
-    ['taskGroup', true],
+    ['taskGroup__code', true],
     ['version', true],
     ['dateUpdated', true],
     ['status', true],
