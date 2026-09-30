@@ -30,7 +30,7 @@ const TASK_FULL_PROJECTION = () => [
   'businessStatus',
   'dateCreated',
   'isDeleted',
-  'taskGroup{id, code, completionPolicy, taskexecutorSet {edges{node{id, user{id}}}}}',
+  'taskGroup{id, code, completionPolicy, taskexecutorSet {edges{node{id, user{id, username, lastName}}}}}',
   'data',
   'businessData',
   'jsonExt',

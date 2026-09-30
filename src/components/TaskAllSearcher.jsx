@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Searcher,
@@ -9,6 +10,7 @@ import {
   GetIconComponent,
 } from '@openimis/fe-core';
 import { IconButton, Tooltip } from '@mui/material';
+import { formatEntity, taskStatusLabel, translateIfKnown } from '../utils/taskDisplay';
 const VisibilityIcon = GetIconComponent("Visibility");
 import {
   RIGHT_TASKS_MANAGEMENT_SEARCH, DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS, TASK_STATUS, TASK_ROUTE,
@@ -21,6 +23,8 @@ function TaskAllSearcher({
   rights, showFilters = true,
 }) {
   const history = useHistory();
+  const intl = useIntl();
+  const translate = (key) => translateIfKnown(intl, key);
   const modulesManager = useModulesManager();
   const dispatch = useDispatch();
   const {
@@ -78,10 +82,10 @@ function TaskAllSearcher({
   const itemFormatters = () => [
     (task) => task.source,
     (task) => trimBusinessEvent(task.businessEvent),
-    (task) => task.entityString,
+    (task) => formatEntity(task.entityString),
     (task) => task?.taskGroup?.code,
     (task) => formatDateTimeFromISO(task?.dateCreated),
-    (task) => task.status,
+    (task) => taskStatusLabel(task.status, translate),
     (task) => (
       <Tooltip title={formatMessage('viewDetailsButton.tooltip')}>
         <IconButton

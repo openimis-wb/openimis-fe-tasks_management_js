@@ -9,12 +9,16 @@ import {
   FormattedMessage,
   formatMessage,
   formatMessageWithValues,
+  decodeId,
 } from '@openimis/fe-core';
 import { injectIntl } from 'react-intl';
 import TaskStatusPicker from '../pickers/TaskStatusPicker';
 import TaskAssignmentPicker, { ASSIGNMENT_KIND, assignmentFromTask } from '../pickers/TaskAssignmentPicker';
 import { TASK_STATUS, TASK_UPDATE } from '../constants';
 import trimBusinessEvent from '../utils/trimBusinessEvent';
+import {
+  formatEntity, formatBusinessStatus, approverNames, translateIfKnown,
+} from '../utils/taskDisplay';
 import TaskHistoryDialog from './dialogs/TaskHistoryDialog';
 
 const StyledTableTitle = styled('div')(({ theme }) => ({
@@ -66,6 +70,7 @@ class TaskHeadPanel extends FormPanel {
       intl, edited, readOnly, rights,
     } = this.props;
     const task = { ...edited };
+    const names = approverNames(task, decodeId);
     const assignment = assignmentFromTask(task);
     // Votes are recorded against the steps of the flow the task is on, so a
     // task that has been decided on can no longer be re-pointed - the service
@@ -114,7 +119,7 @@ class TaskHeadPanel extends FormPanel {
               module="tasksManagement"
               label="task.entity"
               readOnly={readOnly}
-              value={task?.entityString}
+              value={formatEntity(task?.entityString)}
               onChange={(entity) => this.updateAttribute('entity', entity)}
             />
           </Grid>
@@ -148,10 +153,13 @@ class TaskHeadPanel extends FormPanel {
             <Grid size={3} component={StyledItem}>
               <TextAreaInput
                 module="tasksManagement"
-                label="task.businessStatus"
-                readOnly={readOnly}
-                value={task?.businessStatus}
-                onChange={(businessStatus) => this.updateAttribute('businessStatus', businessStatus)}
+                label="task.businessStatus.title"
+                readOnly
+                value={formatBusinessStatus(
+                  task?.businessStatus,
+                  (userId) => names[userId],
+                  (decision) => translateIfKnown(intl, `task.businessStatus.decision.${decision}`),
+                )}
               />
             </Grid>
           )}

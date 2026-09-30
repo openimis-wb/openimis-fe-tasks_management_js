@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Searcher,
@@ -12,12 +13,15 @@ import {
 } from '../constants';
 import { fetchTaskHistory } from '../actions';
 import trimBusinessEvent from '../utils/trimBusinessEvent';
+import { taskStatusLabel, translateIfKnown } from '../utils/taskDisplay';
 import TaskHistoryFilter from './TaskHistoryFilter';
 
 function TaskHistorySearcher({
   rights, showFilters = true, taskId,
 }) {
   const history = useHistory();
+  const intl = useIntl();
+  const translate = (key) => translateIfKnown(intl, key);
   const modulesManager = useModulesManager();
   const dispatch = useDispatch();
   const {
@@ -80,7 +84,7 @@ function TaskHistorySearcher({
     (taskHistory) => taskHistory?.taskGroup?.code,
     (taskHistory) => taskHistory.version,
     (taskHistory) => formatDateTimeFromISO(taskHistory?.dateUpdated),
-    (taskHistory) => taskHistory.status,
+    (taskHistory) => taskStatusLabel(taskHistory.status, translate),
   ];
 
   const defaultFilters = () => {

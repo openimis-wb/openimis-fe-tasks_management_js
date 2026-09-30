@@ -3,6 +3,7 @@
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
 import messages_en from './translations/en.json';
+import messages_fr from './translations/fr.json';
 import reducer from './reducer';
 import TasksManagementPage from './pages/TasksManagementPage';
 import TaskDetailsPage from './pages/TaskDetailsPage';
@@ -33,7 +34,7 @@ const ROUTE_FLOWS_MANAGEMENT = 'tasks/flows';
 const ROUTE_FLOW_MANAGEMENT = 'tasks/flows/flow';
 
 const DEFAULT_CONFIG = {
-  translations: [{ key: 'en', messages: messages_en }],
+  translations: [{ key: 'en', messages: messages_en }, { key: 'fr', messages: messages_fr }],
   reducers: [{ key: 'tasksManagement', reducer }],
   'core.MainMenu': [{ name: 'tasksManagement.tasksMainMenu', id:"tasksManagement.MainMenu", icon: "Assignment", text: "tasksManagement.tasksMainMenu" }],
   'tasksManagement.MainMenu': [
